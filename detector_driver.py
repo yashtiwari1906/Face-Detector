@@ -20,21 +20,13 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def upload():
-    if 'file' not in request.files:
-        return 'No file part'
-    
-    file = request.files['file']
-    
-    img = Image.open(file).convert('RGB')
-    arrImg = np.array(img)
-
-    frame = cv2.cvtColor(arrImg, cv2.COLOR_RGB2BGR)
+    image_list = request.get_json()["image_array"]
+    arrImg = np.array(image_list)
+    frame = cv2.cvtColor(np.float32(arrImg), cv2.COLOR_RGB2BGR)
     detector = DetectorModel("s3fd")
     output = detector.predict(frame) 
-    if file.filename == '':
-        return 'No selected file'
 
-    if file:
-        return {"mode": img.mode, "size": img.size, "coordianates": output}
+    return {"coordianates": output}
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
