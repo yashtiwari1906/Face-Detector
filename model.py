@@ -25,12 +25,13 @@ class DetectorModel:
 
     def predict(self, frame):
         bboxes = self.detector_model.detect_face(frame, with_landmarks = False)
+        face_coordinates = [] 
         for idx, item in enumerate(bboxes):
             p1 = (int(item[1]), int(item[0]))
             p2 = (int(item[3]), int(item[2]))
-            self.face_coordinates.append((p1, p2))
+            face_coordinates.append((p1, p2))
 
-        return self.face_coordinates    
+        return face_coordinates    
 
     def postprocess(self, frame):
         pass 
