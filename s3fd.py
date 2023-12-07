@@ -111,7 +111,7 @@ from scipy import special
 #from .model import s3fd_keras
 
 class S3FD():
-    def __init__(self, weights_path="weights/s3fd_keras_weights.h5"):
+    def __init__(self, weights_path="detector_weights/s3fd_keras_weights.h5"):
         self.net = s3fd_keras()
         self.net.load_weights(weights_path)
 
@@ -231,7 +231,7 @@ class BaseFaceDetector():
         raise NotImplementedError'''
 
 class S3FaceDetector(BaseFaceDetector):
-    def __init__(self, weights_path="weights/s3fd_keras_weights.h5"):
+    def __init__(self, weights_path="detector_weights/s3fd_keras_weights.h5"):
         self.face_detector = S3FD(weights_path)
 
     def detect_face(self, image):
@@ -245,8 +245,8 @@ class S3FaceDetector(BaseFaceDetector):
 
 class FaceAlignmentDetector(BaseFaceDetector):
     def __init__(self,
-                 fd_weights_path="weights/s3fd_keras_weights.h5",
-                 lmd_weights_path="detector/weights/2DFAN-4_keras.h5",
+                 fd_weights_path="detector_weights/s3fd_keras_weights.h5",
+                 lmd_weights_path="detector/detector_weights/2DFAN-4_keras.h5",
                  fd_type="s3fd"):
         self.fd_type = fd_type.lower()
         if fd_type.lower() == "s3fd":
