@@ -13,6 +13,7 @@ class MyEncoder(json.JSONEncoder):
 
 
 app = Flask(__name__)
+detector = DetectorModel("s3fd")
 
 @app.route('/')
 def home():
@@ -23,10 +24,9 @@ def upload():
     image_list = request.get_json()["image_array"]
     arrImg = np.array(image_list)
     frame = cv2.cvtColor(np.float32(arrImg), cv2.COLOR_RGB2BGR)
-    detector = DetectorModel("s3fd")
     output = detector.predict(frame) 
 
     return {"coordianates": output}
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5001, host = "0.0.0.0")  #you need to have host=0.0.0.0 other wise you'll not be able to hit this with docker container

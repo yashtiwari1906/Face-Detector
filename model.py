@@ -1,5 +1,5 @@
 from s3fd import FaceAlignmentDetector
-
+import gdown
 
 class DetectorModel: 
     def __init__(self, model) -> None:
@@ -7,8 +7,18 @@ class DetectorModel:
         self.face_coordinates = [] 
         self.load() 
 
+    def download_weights(self):
+        print("downloading weights....")
+        try:
+            url = "https://drive.google.com/drive/folders/13wfCyRK6DlV3omYSdI-N1sN5NGb7WN5p?usp=drive_link"
+            gdown.download_folder(url, quiet=True, use_cookies=False)
+            print("weights downloaded successfully")
+        except Exception as e:
+            raise RuntimeError("some error occured while downloading weights.", e)
+
     def load(self):
-        self.detector_model = FaceAlignmentDetector(lmd_weights_path="weights/s3fd_keras_weights.h5")
+        self.download_weights()
+        self.detector_model = FaceAlignmentDetector(lmd_weights_path="detector_weights/s3fd_keras_weights.h5")
     
     def preprocess(self, frame):
         pass 
