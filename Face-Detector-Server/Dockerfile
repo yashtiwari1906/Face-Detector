@@ -7,4 +7,5 @@ RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 RUN apt-get update
 RUN apt-get install ffmpeg libsm6 libxext6  -y  && pip install --upgrade pip && pip install -r requirements.txt
-CMD ["python",  "detector_driver.py"] 
+ENTRYPOINT ["python", "-m", "Face-Detector-Server"]
+# CMD ["python",  "detector_driver.py"] 
