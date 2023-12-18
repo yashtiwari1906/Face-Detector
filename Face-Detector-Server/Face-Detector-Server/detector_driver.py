@@ -33,7 +33,7 @@ class DetectorModel(kserve.Model):
             raise RuntimeError("some error occured while downloading weights.", e)
 
     def load(self):
-        # self.download_weights()
+        self.download_weights()
         self.detector_model = FaceAlignmentDetector(lmd_weights_path="detector_weights/s3fd_keras_weights.h5")
         self.ready = True
 
