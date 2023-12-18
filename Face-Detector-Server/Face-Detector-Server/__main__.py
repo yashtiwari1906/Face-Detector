@@ -1,3 +1,4 @@
+from http.client import HTTP_PORT
 import kserve
 import argparse
 from .detector_driver import DetectorModel
@@ -18,5 +19,5 @@ args, _ = parser.parse_known_args()
 
 if __name__ == "__main__":
     driver = DetectorModel(args.model_name, args.model_dir)
-    kfserver = kserve.ModelServer()
+    kfserver = kserve.ModelServer(http_port=5001)
     kfserver.start(models=[driver])
